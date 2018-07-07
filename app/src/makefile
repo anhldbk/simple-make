@@ -1,0 +1,28 @@
+APP = $(BUILD_DIR)/app
+APP_INC = -I$(APP_DIR)/include -I$(META_DIR)/include
+
+APP_SRC = $(wildcard $(APP_DIR)/src/*.cpp)
+APP_OBJ = $(patsubst %.cpp,%.o, $(APP_SRC))
+
+%.o: %.cpp
+	$(CXX) $(CXXFLAGS)  -c $< $(APP_INC)
+
+BIN = 
+
+define log =
+$(info ======================================)
+$(info $1)
+$(info ======================================)
+endef
+
+$(call log, Compiling app...)
+
+
+all: $(BIN) $(APP)
+	$(call log, app is compiled successfully)
+
+$(APP): $(APP_OBJ)
+	$(CXX) $(INCLUDES) $(CXXFLAGS)  -o $(APP) $(APP_OBJ) $(LIB_META) 
+
+clean:
+	rm -rf $(APP) $(APP_OBJ)
