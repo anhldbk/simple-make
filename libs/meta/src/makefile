@@ -10,17 +10,18 @@ $(info $1)
 $(info ======================================)
 endef
 
-$(call log, Compiling meta...)
+$(START):
+	$(call log, Compiling meta...)
+
+$(STOP):
+	$(call log, meta is successfully compiled...)
+
 
 %.o: %.cpp
-	$(CXX) $(CXXFLAGS)  -c $< $(LIB_META_INC)
+	$(CXX) $(CXXFLAGS)  -c -o $@ $<  $(LIB_META_INC)
 
 
-BIN = 
-
-
-
-all: $(BIN) $(LIB_META)
+all: $(START) $(LIB_META) $(STOP)
 	$(call log, meta is successfully compiled...)
 
 

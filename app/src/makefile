@@ -5,7 +5,7 @@ APP_SRC = $(wildcard $(APP_DIR)/src/*.cpp)
 APP_OBJ = $(patsubst %.cpp,%.o, $(APP_SRC))
 
 %.o: %.cpp
-	$(CXX) $(CXXFLAGS)  -c $< $(APP_INC)
+	$(CXX) $(CXXFLAGS) -c -o $@ $< $(APP_INC)
 
 BIN = 
 
@@ -15,10 +15,14 @@ $(info $1)
 $(info ======================================)
 endef
 
-$(call log, Compiling app...)
+$(START):
+	$(call log, Compiling app...)
+
+$(STOP):
+	$(call log, app is successfully compiled...)
 
 
-all: $(BIN) $(APP)
+all: $(START) $(APP) $(STOP)
 	$(call log, app is compiled successfully)
 
 $(APP): $(APP_OBJ)
